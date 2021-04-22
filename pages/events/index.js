@@ -3,7 +3,7 @@ import EventItem from "@/components/EventItem";
 
 import { API_URL } from "@/config/index";
 
-export default function EventsPage({ evts }) {
+export default function EventsPage() {
   return (
     <Layout>
       <h1>Upcoming Events</h1>
@@ -16,15 +16,15 @@ export default function EventsPage({ evts }) {
   );
 }
 
-export async function getStaticProps() {
-  const res = await fetch(`${API_URL}/api/events`);
+// export async function getStaticProps() {
+//   const res = await fetch(`${API_URL}/api/events`);
 
-  const evts = await res.json();
+//   const evts = await res.json();
 
-  return {
-    props: {
-      evts: evts.slice(0, 3),
-    },
-    revalidate: 10,
-  };
-}
+//   return {
+//     props: {
+//       evts: evts.slice(0, 3),
+//     },
+//     revalidate: 10,
+//   };
+// }

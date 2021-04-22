@@ -5,7 +5,7 @@ import EventItem from "@/components/EventItem";
 
 import { API_URL } from "@/config/index";
 
-export default function Home({ evts }) {
+export default function Home() {
   return (
     <Layout>
       <h1>Home</h1>
@@ -26,15 +26,15 @@ export default function Home({ evts }) {
   );
 }
 
-export async function getStaticProps() {
-  const res = await fetch(`${API_URL}/api/events`);
+// export async function getStaticProps() {
+//   const res = await fetch(`${API_URL}/api/events`);
 
-  const evts = await res.json();
+//   const evts = await res.json();
 
-  return {
-    props: {
-      evts,
-    },
-    revalidate: 10,
-  };
-}
+//   return {
+//     props: {
+//       evts,
+//     },
+//     revalidate: 10,
+//   };
+// }
