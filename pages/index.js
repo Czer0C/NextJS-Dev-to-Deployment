@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <Layout>
       <h1>Home</h1>
-      {/* {evts && evts.length === 0 && <h3>No events to show</h3>}
+      {evts && evts.length === 0 && <h3>No events to show</h3>}
 
       {evts && evts.map((ev) => <EventItem key={ev.name} evt={ev} />)}
 
@@ -19,15 +19,15 @@ export default function Home() {
             <a className="btn-secondary ">View All Events</a>
           </center>
         </Link>
-      )} */}
+      )}
     </Layout>
   );
 }
 
 export async function getStaticProps() {
   const res = await fetch(`${API_URL}/api/events`);
-  console.log(res);
   const evts = await res.json();
+  console.log(res);
 
   return {
     props: {
