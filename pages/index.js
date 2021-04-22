@@ -24,15 +24,15 @@ export default function Home() {
   );
 }
 
-// export async function getStaticProps() {
-//   const res = await fetch(`${API_URL}/api/events`);
+export async function getStaticProps() {
+  const res = await fetch(`${API_URL}/api/events`);
+  console.log(res);
+  const evts = await res.json();
 
-//   const evts = await res.json();
-
-//   return {
-//     props: {
-//       evts,
-//     },
-//     revalidate: 10,
-//   };
-// }
+  return {
+    props: {
+      evts,
+    },
+    revalidate: 10,
+  };
+}
