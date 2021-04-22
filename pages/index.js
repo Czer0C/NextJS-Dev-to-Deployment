@@ -27,7 +27,7 @@ export default function Home() {
 export async function getStaticProps() {
   const res = await fetch(`${API_URL}/api/events`);
   const evts = await res.json();
-  console.log(res);
+  console.log(evts);
 
   return {
     props: {
