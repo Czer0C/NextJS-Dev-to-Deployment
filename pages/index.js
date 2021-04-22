@@ -11,11 +11,9 @@ export default function Home() {
       <h1>Home</h1>
       {evts && evts.length === 0 && <h3>No events to show</h3>}
 
-      {evts.map((ev) => (
-        <EventItem key={ev.name} evt={ev} />
-      ))}
+      {evts && evts.map((ev) => <EventItem key={ev.name} evt={ev} />)}
 
-      {evts.length > 0 && (
+      {evts && evts.length > 0 && (
         <Link href="/events">
           <center>
             <a className="btn-secondary ">View All Events</a>
