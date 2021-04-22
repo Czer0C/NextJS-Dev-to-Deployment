@@ -9,9 +9,7 @@ export default function EventsPage() {
       <h1>Upcoming Events</h1>
       {evts && evts.length === 0 && <h3>No events to show</h3>}
 
-      {evts.map((ev) => (
-        <EventItem key={ev.name} evt={ev} />
-      ))}
+      {evts && evts.map((ev) => <EventItem key={ev.name} evt={ev} />)}
     </Layout>
   );
 }
