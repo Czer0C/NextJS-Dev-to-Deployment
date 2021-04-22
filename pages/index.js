@@ -8,7 +8,9 @@ import { API_URL } from "@/config/index";
 export default function Home({ evts }) {
   return (
     <Layout>
-      <h1>Home</h1>
+      <center>
+        <h1>Home</h1>
+      </center>
       {evts && evts.length === 0 && <h3>No events to show</h3>}
 
       {evts && evts.map((ev) => <EventItem key={ev.name} evt={ev} />)}
