@@ -5,7 +5,7 @@ import EventItem from "@/components/EventItem";
 
 import { API_URL } from "@/config/index";
 
-export default function Home() {
+export default function Home({ evts }) {
   return (
     <Layout>
       <h1>Home</h1>
