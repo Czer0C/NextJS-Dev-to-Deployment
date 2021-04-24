@@ -40,7 +40,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    console.log("Logout");
+    const res = await fetch(`${NEXT_URL}/api/logout`, {
+      method: "POST",
+    });
+
+    if (res.ok) {
+      userSet(null);
+      router.push("/");
+    }
   };
 
   const checkUserLoggedIn = async (user) => {
