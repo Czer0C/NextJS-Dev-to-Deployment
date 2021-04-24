@@ -5,7 +5,6 @@ import Link from "next/link";
 import Layout from "@/components/Layout";
 import { API_URL } from "@/config/index";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import styles from "@/styles/Form.module.css";
 
@@ -46,7 +45,7 @@ export default function AddEventPage() {
       toast.error("Something went wrong");
     } else {
       const evt = await res.json();
-      console.log(evt);
+
       router.push(`/events/${evt.slug}`);
     }
   };
