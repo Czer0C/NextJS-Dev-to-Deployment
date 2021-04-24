@@ -10,6 +10,7 @@ import { API_URL } from "@/config/index";
 import { ToastContainer, toast } from "react-toastify";
 
 import styles from "@/styles/Form.module.css";
+import ImageUpload from "@/components/ImageUpload";
 
 export default function EditEventPage({ evt }) {
   const [values, valuesSet] = useState({
@@ -63,6 +64,14 @@ export default function EditEventPage({ evt }) {
     const { name, value } = e.target;
 
     valuesSet({ ...values, [name]: value });
+  };
+
+  const imageUploaded = async (e) => {
+    const res = await fetch(`${API_URL}/events/${evt.id}`);
+    const data = await res.json();
+
+    imagePreviewSet(data.image.formats.thumbnail.url);
+    showModalSet(false);
   };
 
   return (
@@ -164,7 +173,7 @@ export default function EditEventPage({ evt }) {
       </div>
 
       <Modal show={showModal} onClose={() => showModalSet(false)}>
-        IMAGE UPLOAD
+        <ImageUpload evtId={evt.id} imageUploaded={imageUploaded} />
       </Modal>
     </Layout>
   );
