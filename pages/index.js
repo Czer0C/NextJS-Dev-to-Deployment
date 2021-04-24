@@ -9,7 +9,7 @@ export default function Home({ evts }) {
   return (
     <Layout>
       <center>
-        <h1>Home</h1>
+        <h1>Upcoming Events</h1>
       </center>
       {evts && evts.length === 0 && <h3>No events to show</h3>}
 
@@ -27,7 +27,7 @@ export default function Home({ evts }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch(`${API_URL}/api/events`);
+  const res = await fetch(`${API_URL}/events?_sort=date:ASC&_limit=3`);
   const evts = await res.json();
 
   return {
