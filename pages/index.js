@@ -9,7 +9,7 @@ export default function Home({ evts }) {
   return (
     <Layout>
       <center>
-        <h1>Home</h1>
+        <h1>Upcoming Events</h1>
       </center>
       {evts && evts.length === 0 && <h3>No events to show</h3>}
 
