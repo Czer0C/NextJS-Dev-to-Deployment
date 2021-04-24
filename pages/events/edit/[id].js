@@ -5,6 +5,7 @@ import Image from "next/image";
 import moment from "moment";
 import { FaImage } from "react-icons/fa";
 import Layout from "@/components/Layout";
+import Modal from "@/components/Modal";
 import { API_URL } from "@/config/index";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -24,6 +25,8 @@ export default function EditEventPage({ evt }) {
   const [imagePreview, imagePreviewSet] = useState(
     evt.image ? evt.image.formats.thumbnail.url : null
   );
+
+  const [showModal, showModalSet] = useState(false);
 
   const router = useRouter();
 
@@ -155,10 +158,14 @@ export default function EditEventPage({ evt }) {
       )}
 
       <div>
-        <button className="btn">
+        <button className="btn" onClick={() => showModalSet(true)}>
           <FaImage /> Set Image
         </button>
       </div>
+
+      <Modal show={showModal} onClose={() => showModalSet(false)}>
+        IMAGE UPLOAD
+      </Modal>
     </Layout>
   );
 }
