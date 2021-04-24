@@ -5,10 +5,29 @@ import { API_URL } from "@/config/index";
 
 import styles from "@/styles/Dashboard.module.css";
 import DashboardEvent from "@/components/DashboardEvent";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
-export default function DashboardPage({ evts }) {
-  const deleteEvent = (evtId) => {
-    console.log(evtId);
+export default function DashboardPage({ evts, token }) {
+  const router = useRouter();
+
+  const deleteEvent = async (evtId) => {
+    if (confirm("Are you sure")) {
+      const res = await fetch(`${API_URL}/events/${evtId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.message);
+      } else {
+        router.reload();
+      }
+    }
   };
   return (
     <Layout title="User Dashboard">
@@ -39,6 +58,7 @@ export async function getServerSideProps({ req }) {
   return {
     props: {
       evts,
+      token,
     },
   };
 }

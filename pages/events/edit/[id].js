@@ -11,8 +11,9 @@ import { ToastContainer, toast } from "react-toastify";
 
 import styles from "@/styles/Form.module.css";
 import ImageUpload from "@/components/ImageUpload";
+import { parseCookies } from "@/helpers/helpers";
 
-export default function EditEventPage({ evt }) {
+export default function EditEventPage({ evt, token }) {
   const [values, valuesSet] = useState({
     name: evt.name,
     performers: evt.performers,
@@ -47,18 +48,23 @@ export default function EditEventPage({ evt }) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(values),
     });
 
     const data = await res.json();
 
-    if (!res.ok) {
-      toast.error(data.message);
-    } else {
-      const evt = await res.json();
+    console.log(evt);
 
-      router.push(`/events/${evt.slug}`);
+    if (!res.ok) {
+      if ([403, 401].includes(res.status)) {
+        toast.error(`Invalid permision, you cannot modify this event`);
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      router.push(`/events/${data.slug}`);
     }
   };
 
@@ -175,19 +181,23 @@ export default function EditEventPage({ evt }) {
       </div>
 
       <Modal show={showModal} onClose={() => showModalSet(false)}>
-        <ImageUpload evtId={evt.id} imageUploaded={imageUploaded} />
+        <ImageUpload
+          evtId={evt.id}
+          imageUploaded={imageUploaded}
+          token={token}
+        />
       </Modal>
     </Layout>
   );
 }
 
 export async function getServerSideProps({ params: { id }, req }) {
+  const { token } = parseCookies(req);
+
   const res = await fetch(`${API_URL}/events/${id}`);
   const evt = await res.json();
 
-  console.log(req.headers.cookie);
-
   return {
-    props: { evt },
+    props: { evt, token },
   };
 }
