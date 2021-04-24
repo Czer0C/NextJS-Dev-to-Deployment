@@ -5,15 +5,17 @@ import styles from "@/styles/AuthForm.module.css";
 
 import { FaUser } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
+import AuthContext from "@/context/AuthContext";
 
 export default function LoginPage() {
   const [email, emailSet] = useState("");
   const [password, passwordSet] = useState("");
 
+  const { login, error } = useContext(AuthContext);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log({
+    login({
       email,
       password,
     });
