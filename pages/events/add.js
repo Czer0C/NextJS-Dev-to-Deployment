@@ -7,8 +7,9 @@ import { API_URL } from "@/config/index";
 import { ToastContainer, toast } from "react-toastify";
 
 import styles from "@/styles/Form.module.css";
+import { parseCookies } from "@/helpers/helpers";
 
-export default function AddEventPage() {
+export default function AddEventPage({ token }) {
   const [values, valuesSet] = useState({
     name: "",
     performers: "",
@@ -37,15 +38,20 @@ export default function AddEventPage() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(values),
     });
 
-    if (!res.ok) {
-      toast.error("Something went wrong");
-    } else {
-      const evt = await res.json();
+    const evt = await res.json();
 
+    if (!res.ok) {
+      if (res.status === 403 || res.status === 401) {
+        toast.error("You must login before adding events.");
+      } else {
+        toast.error(evt.message);
+      }
+    } else {
       router.push(`/events/${evt.slug}`);
     }
   };
@@ -142,4 +148,14 @@ export default function AddEventPage() {
       </form>
     </Layout>
   );
+}
+
+export async function getServerSideProps({ req }) {
+  const { token } = parseCookies(req);
+
+  return {
+    props: {
+      token,
+    },
+  };
 }
