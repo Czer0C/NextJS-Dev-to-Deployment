@@ -31,6 +31,7 @@ export default function AddEventPage() {
 
     if (hasEmptyFields) {
       toast.error("Fill in nigga");
+      return;
     }
 
     const res = await fetch(`${API_URL}/events`, {
@@ -45,6 +46,7 @@ export default function AddEventPage() {
       toast.error("Something went wrong");
     } else {
       const evt = await res.json();
+      console.log(evt);
       router.push(`/events/${evt.slug}`);
     }
   };
